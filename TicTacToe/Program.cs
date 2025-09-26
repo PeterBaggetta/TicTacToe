@@ -19,11 +19,26 @@
 
                     UI.DisplayBoard(tictactoeBoard);
 
-                    // Players Turn
+                    // Players Turn (Check if valid row & col, and check if spot is already played)
                     int playerRow = UI.AskForPlayerRow();
                     int playerCol = UI.AskForPlayerCol();
+                    while (!Logic.InsertPlayerMove(playerRow, playerCol, tictactoeBoard))
+                    {
+                        UI.DisplayInvalidMove();
+                        playerRow = UI.AskForPlayerRow();
+                        playerCol = UI.AskForPlayerCol();
+                    }
 
-                    gameOver = true;
+                    // Check if the board has a winner
+                    if (Logic.HasWinner(tictactoeBoard))
+                    {
+                        UI.DisplayBoard(tictactoeBoard);
+                        UI.DisplayWinner("YOU");
+                        gameOver = true;
+                        break;
+                    }
+
+                    //gameOver = true;
                 }
             } while (UI.AskToPlayGameAgain());
         }

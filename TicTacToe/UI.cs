@@ -33,7 +33,7 @@ namespace TicTacToe
         public static bool AskToPlayGameAgain()
         {
             Console.WriteLine();
-            Console.WriteLine("Want to spin again? (Y/N): ");
+            Console.WriteLine("Want to play again? (Y/N): ");
             ConsoleKeyInfo playAgainInput = Console.ReadKey();
             char playAgain = char.ToLower(playAgainInput.KeyChar);
             if (playAgain != PLAY_AGAIN)
@@ -127,6 +127,25 @@ namespace TicTacToe
 
                 Console.WriteLine("Please enter a number between 1 and 3.");
             }
+        }
+
+        /// <summary>
+        /// Tell the player that there was an invalid move made
+        /// </summary>
+        public static void DisplayInvalidMove()
+        {
+            Console.WriteLine("The chosen cell is not available to play. Please try again.");
+        }
+
+        /// <summary>
+        /// Announces the winner of the game
+        /// </summary>
+        /// <param name="winner">This is the winner of the game (either YOU or AI)</param>
+        public static void DisplayWinner(string winner)
+        {
+            Console.WriteLine();
+            Console.WriteLine($"The winner is {winner}");
+            Console.WriteLine();
         }
     }
 }
