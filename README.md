@@ -7,12 +7,13 @@ The program supports different board sizes like (3x3, 5x5, 7x7, etc.). The BOARD
 ---
 
 ## Project Structure
+```
 TicTacToe
 |
 |-- Program.cs	-> Main game loop
 |-- UI.cs		-> Handles input and output (Console.WriteLine/ReadLine)
 |-- Logic.cs	-> Game rules, board, logic and AI
-
+```
 ---
 
 ## How to Play
