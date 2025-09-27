@@ -1,4 +1,6 @@
-﻿namespace TicTacToe
+﻿using System.Reflection.Metadata.Ecma335;
+
+namespace TicTacToe
 {
 
     public static class Logic
@@ -176,14 +178,103 @@
             return true;
         }
 
-        public static int GetAIMoveRow(char[,] board, char aiSymbol, char playerSymbol)
+        /// <summary>
+        /// This method picks the AI move with some conditions:
+        /// Win     -> AI is able to win the game so it moves in that spot
+        /// Block   -> Player is about to win so the AI blocks
+        /// Center  -> AI plays in the center of the board (most common for best move)
+        /// Corners -> AI plays in the corners to setup after playing center
+        /// Open    -> AI plays in any open cell if the optimal one is not available
+        /// </summary>
+        /// <param name="board">This is the tic tac toe board for the game</param>
+        /// <param name="aiSymbol">This is the AI Symbol on the gameboard</param>
+        /// <param name="playerSymbol">This is the player symbol on the gameboard</param>
+        /// <returns>The row and column that the AI will play</returns>
+        public static (int row, int col) GetAIMove(char[,] board, char aiSymbol, char playerSymbol)
         {
-            throw new NotImplementedException();
+            // AI tries to win
+            (int winRow, int winCol) = FindWinningMove(board, aiSymbol);
+            if (winRow != -1)
+            {
+                return (winRow, winCol);
+            }
+
+            // AI tries to block
+            (int blockRow, int blockCol) = FindWinningMove(board, playerSymbol);
+            if (blockRow != -1)
+            {
+                return (blockRow, blockCol);
+            }
+
+            // AI plays center of board
+            int centerBoard = BOARD_SIZE / 2;
+            if (board[centerBoard, centerBoard] == '\0')
+            {
+                return (centerBoard, centerBoard);
+            }
+
+            // AI Plays the corners
+            if (board[0, 0] == '\0')
+            {
+                return (0, 0);
+            }
+            if (board[0, BOARD_SIZE - 1] == '\0')
+            {
+                return (0, BOARD_SIZE - 1);
+            }
+            if (board[BOARD_SIZE - 1, 0] == '\0')
+            {
+                return (BOARD_SIZE - 1, 0);
+            }
+            if (board[BOARD_SIZE - 1, BOARD_SIZE - 1] == '\0')
+            {
+                return (BOARD_SIZE - 1, BOARD_SIZE - 1);
+            }
+
+            // AI plays in first open spot (corners, middle, win or block not open)
+            for (int r = 0; r < BOARD_SIZE; r++)
+            {
+                for (int c = 0; c < BOARD_SIZE; c++)
+                {
+                    if (board[r, c] == '\0')
+                    {
+                        return (r, c);
+                    }
+                }
+            }
+            return (0, 0);
         }
 
-        public static int GetAIMoveCol(char[,] board, char aiSymbol, char playerSymbol)
+        /// <summary>
+        /// Finds a winning move or blocking move on the gameboard
+        /// </summary>
+        /// <param name="board">This is the tic tac toe board for the game</param>
+        /// <param name="symbol">Symbol of either AI or player depending on what is being checked</param>
+        /// <returns>A row and column which is either the win or block</returns>
+        public static (int row, int col) FindWinningMove(char [,] board, char symbol)
         {
-            throw new NotImplementedException();
+            for (int r = 0; r < BOARD_SIZE; r++)
+            {
+                for (int c = 0; c < BOARD_SIZE; c++)
+                {
+                    if (board[r,c] != '\0')
+                    {
+                        continue;
+                    }
+
+                    // Try placing symbol and check if its a winning move
+                    board[r, c] = symbol;
+                    bool win = HasWinner(board, symbol);
+                    board[r, c] = '\0'; // Undo trying to place (place symbol in different method for consistency)
+
+                    if (win)
+                    {
+                        return (r, c);
+                    }
+                }
+            }
+            // There is not a winning move
+            return (-1, -1);
         }
     }
 }

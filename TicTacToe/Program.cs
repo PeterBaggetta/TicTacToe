@@ -13,7 +13,7 @@
         /// </summary>
         public const char PLAY_AGAIN = 'y';
 
-        
+
 
         static void Main(string[] args)
         {
@@ -61,8 +61,7 @@
                     }
 
                     // AIs Turn
-                    int aiRow = Logic.GetAIMoveRow(tictactoeBoard, AI_SYMBOL, PLAYER_SYMBOL);
-                    int aiCol = Logic.GetAIMoveCol(tictactoeBoard, AI_SYMBOL, PLAYER_SYMBOL);
+                    (int aiRow, int aiCol) = Logic.GetAIMove(tictactoeBoard, AI_SYMBOL, PLAYER_SYMBOL);
                     Logic.InsertMove(aiRow, aiCol, tictactoeBoard, AI_SYMBOL);
                     UI.DisplayAIMove(aiRow, aiCol);
 
@@ -81,6 +80,7 @@
                         gameOver = true;
                         break;
                     }
+                    Thread.Sleep(1500);
                 }
             } while (UI.AskToPlayGameAgain(PLAY_AGAIN));
 
