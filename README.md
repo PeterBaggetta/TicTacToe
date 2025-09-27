@@ -1,7 +1,9 @@
 # Tic Tac Toe
 
 This is a simple console-based Tic TacToe game written in **C#**.
+
 You as the player play as **X**, and the computer (AI) plays as **O**.
+
 The program supports different board sizes like (3x3, 5x5, 7x7, etc.). The BOARD_SIZE constant must be an odd number.
 
 ---
