@@ -1,6 +1,4 @@
-﻿using System.Reflection.Metadata.Ecma335;
-
-namespace TicTacToe
+﻿namespace TicTacToe
 {
 
     public static class Logic
@@ -251,13 +249,13 @@ namespace TicTacToe
         /// <param name="board">This is the tic tac toe board for the game</param>
         /// <param name="symbol">Symbol of either AI or player depending on what is being checked</param>
         /// <returns>A row and column which is either the win or block</returns>
-        public static (int row, int col) FindWinningMove(char [,] board, char symbol)
+        public static (int row, int col) FindWinningMove(char[,] board, char symbol)
         {
             for (int r = 0; r < BOARD_SIZE; r++)
             {
                 for (int c = 0; c < BOARD_SIZE; c++)
                 {
-                    if (board[r,c] != '\0')
+                    if (board[r, c] != '\0')
                     {
                         continue;
                     }
